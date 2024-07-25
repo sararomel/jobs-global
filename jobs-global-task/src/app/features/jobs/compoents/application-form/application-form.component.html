@@ -1,0 +1,25 @@
+<p-dialog header="Application Form" [(visible)]="display" [modal]="true" [closable]="true">
+    <form [formGroup]="applicationForm" (ngSubmit)="onSubmit()">
+      <div class="p-fluid">
+        <label for="name">Name</label>
+        <input id="name" pInputText formControlName="name" />
+        <!-- <div *ngIf="applicationForm?.get('name')?.invalid && applicationForm?.get('name')?.touched">
+          Name is required
+        </div> -->
+
+        <label for="email">Email</label>
+        <input id="email" pInputText formControlName="email" type="email" />
+        <!-- <div *ngIf="applicationForm?.get('email').invalid && applicationForm?.get('email')?.touched">
+          Valid email is required
+        </div> -->
+
+        <label for="cv">CV</label>
+        <input id="cv" type="file" (change)="onFileChange($event)" />
+        <div *ngIf="cvError">{{ cvError }}</div>
+      </div>
+      <p-footer>
+        <button pButton type="submit" label="Submit" [disabled]="applicationForm?.invalid"></button>
+        <button pButton type="button" label="Cancel" (click)="close()"></button>
+      </p-footer>
+    </form>
+</p-dialog>

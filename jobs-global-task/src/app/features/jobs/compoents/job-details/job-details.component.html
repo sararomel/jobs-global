@@ -1,0 +1,16 @@
+<p-dialog header="Job Details" [(visible)]="display" [modal]="true" [closable]="true">
+    <div class="p-fluid">
+      <h2>{{ job.title }}</h2>
+      <p><strong>Company:</strong> {{ job.company_title }}</p>
+      <p><strong>Location:</strong> {{ job.location }}</p>
+      <p><strong>Posted:</strong> {{ job.created_at | date }}</p>
+      <p><strong>Requirements:</strong> {{ job.requirements }}</p>
+      <p><strong>Responsibilities:</strong> {{ job.responsibilities }}</p>
+      <p>{{ job.description }}</p>
+    </div>
+    <p-footer>
+      <button pButton type="button" label="Apply" (click)="openApplicationForm()"></button>
+      <button pButton type="button" label="Save Job"></button>
+      <button pButton type="button" label="Close" (click)="close()"></button>
+    </p-footer>
+  </p-dialog>
