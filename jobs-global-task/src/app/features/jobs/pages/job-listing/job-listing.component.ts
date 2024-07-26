@@ -2,18 +2,16 @@ import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { jobsStore } from '../../store/jobs.store';
-import { DialogService } from 'primeng/dynamicdialog/dialogservice';
 import { JobDetailsComponent } from '../../compoents/job-details/job-details.component';
 import { ApplicationFormComponent } from '../../compoents/application-form/application-form.component';
 
 @Component({
   selector: 'app-job-listing',
   standalone: true,
-  imports: [CommonModule, FormsModule],
+  imports: [CommonModule, FormsModule,ApplicationFormComponent],
   templateUrl: './job-listing.component.html',
   styleUrls: ['./job-listing.component.scss'],
-  providers: [DialogService,
-  ]
+
 })
 export class JobListingComponent implements OnInit {
   readonly jobsStore = inject(jobsStore)
@@ -23,8 +21,10 @@ export class JobListingComponent implements OnInit {
   titleFilter = '';
   locationFilter = '';
   page = 1;
-
-  constructor(private dialogService: DialogService) { }
+  selectedJob: any = null;
+  showJobDetails = false;
+  showApplicationForm = false;
+  constructor() { }
 
   ngOnInit(): void {
     this.loadJobs();
@@ -44,25 +44,20 @@ export class JobListingComponent implements OnInit {
 
 
   openDetails(job: any): void {
-    const dialogRef = this.dialogService.open(JobDetailsComponent, {
-      data: { job },
-      header: 'Job Details',
-      width: '70%'
-    });
-
-    dialogRef.onClose.subscribe(result => {
-      if (result?.action === 'apply') {
-        this.openApplicationForm(result.job);
-      }
-    });
+    this.selectedJob = job;
+    this.showJobDetails = true;
   }
 
-  openApplicationForm(job: any): void {
-    this.dialogService.open(ApplicationFormComponent, {
-      data: { job },
-      header: `Apply for ${job.title}`,
-      width: '70%'
-    });
+  closeDetails(): void {
+    this.showJobDetails = false;
+  }
+
+  openApplicationForm(): void {
+    this.showApplicationForm = true;
+  }
+
+  closeApplicationForm(): void {
+    this.showApplicationForm = false;
   }
 
   filterJobs(): void {

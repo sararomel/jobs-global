@@ -1,34 +1,24 @@
-import { Component, Inject } from '@angular/core';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule} from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { FormBuilder, FormGroup, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
 
 @Component({
   selector: 'app-application-form',
-  templateUrl: './application-form.component.html',
-  styleUrls: ['./application-form.component.scss'],
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule, FormsModule, CommonModule, DynamicDialogModule, ReactiveFormsModule],
-  providers: [DynamicDialogRef]
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
+  templateUrl: './application-form.component.html',
+  styleUrls: ['./application-form.component.scss']
 })
 export class ApplicationFormComponent {
-  display: boolean = true;
+  @Input() job: any;
+  @Output() close = new EventEmitter<void>();
   applicationForm: FormGroup;
   cvError: string | null = null;
 
-  constructor(
-    private fb: FormBuilder,
-    public dialogRef: DynamicDialogRef,
-    @Inject('job') public job: any
-  ) {
+  constructor(private fb: FormBuilder) {
     this.applicationForm = this.fb.group({
       name: ['', Validators.required],
       email: ['', [Validators.required, Validators.email]],
-      // Add other form controls similarly
       cv: [null, Validators.required]
     });
   }
@@ -46,13 +36,9 @@ export class ApplicationFormComponent {
 
   onSubmit(): void {
     if (this.applicationForm.valid) {
-      // Handle form submission
       console.log('Application submitted:', this.applicationForm.value);
-      this.dialogRef.close({ action: 'submit', data: this.applicationForm.value });
+      // Handle form submission logic
+      this.close.emit();
     }
-  }
-
-  close(): void {
-    this.dialogRef.close();
   }
 }

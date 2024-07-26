@@ -1,40 +1,31 @@
-import { Component, Inject } from '@angular/core';
-import { DialogService, DynamicDialogModule, DynamicDialogRef } from 'primeng/dynamicdialog';
+import { Component, Inject, OnInit } from '@angular/core';
 import { ApplicationFormComponent } from '../application-form/application-form.component';
-import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { ButtonModule } from 'primeng/button';
-import { DialogModule } from 'primeng/dialog';
-import { InputTextModule } from 'primeng/inputtext';
 import { CommonModule } from '@angular/common';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-job-details',
   standalone: true,
-  imports: [DialogModule, ButtonModule, InputTextModule, FormsModule,
-    ReactiveFormsModule, CommonModule,
-    DynamicDialogModule],
+  imports: [CommonModule, FormsModule, ReactiveFormsModule],
   templateUrl: './job-details.component.html',
-  styleUrl: './job-details.component.scss',
-  providers: [DynamicDialogRef]
-
+  styleUrls: ['./job-details.component.scss']
 })
-export class JobDetailsComponent {
-  display: boolean = true;
+export class JobDetailsComponent implements OnInit {
+  display: boolean = false;
   job: any;
 
   constructor(
-    private dialogService: DialogService,
     @Inject('job') job: any
   ) {
     this.job = job;
   }
 
+  ngOnInit(): void {
+    this.display = true;
+  }
+
   openApplicationForm() {
-    this.dialogService.open(ApplicationFormComponent, {
-      header: `Apply for ${this.job.title}`,
-      width: '70%',
-      data: { job: this.job }
-    });
+    // You can implement this to open a custom application form modal
   }
 
   close() {
