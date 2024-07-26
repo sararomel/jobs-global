@@ -4,11 +4,12 @@ import { FormsModule } from '@angular/forms';
 import { jobsStore } from '../../store/jobs.store';
 import { JobDetailsComponent } from '../../compoents/job-details/job-details.component';
 import { ApplicationFormComponent } from '../../compoents/application-form/application-form.component';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-job-listing',
   standalone: true,
-  imports: [CommonModule, FormsModule,ApplicationFormComponent],
+  imports: [CommonModule, FormsModule,ApplicationFormComponent,RouterModule],
   templateUrl: './job-listing.component.html',
   styleUrls: ['./job-listing.component.scss'],
 
