@@ -1,19 +1,10 @@
 <div class="container mx-auto p-4">
+  <!--  this button to navigate to the login page -->
+  <button class="btn-primary" routerLink="/login">Login</button>
   <div class="mb-4">
-    <input
-      type="text"
-      [(ngModel)]="titleFilter"
-      (input)="filterJobs()"
-      placeholder="Filter by title"
-      class="input"
-    />
-    <input
-      type="text"
-      [(ngModel)]="locationFilter"
-      (input)="filterJobs()"
-      placeholder="Filter by location"
-      class="input"
-    />
+    <input type="text" [(ngModel)]="titleFilter" (input)="filterJobs()" placeholder="Filter by title" class="input" />
+    <input type="text" [(ngModel)]="locationFilter" (input)="filterJobs()" placeholder="Filter by location"
+      class="input" />
   </div>
 
   <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
@@ -51,5 +42,6 @@
 <!-- Application Form Modal -->
 <div class="fixed inset-0 flex items-center justify-center z-50" *ngIf="showApplicationForm">
   <div class="fixed inset-0 bg-black opacity-50" (click)="closeApplicationForm()"></div>
-  <app-application-form [job]="selectedJob" (close)="closeApplicationForm()" class="relative z-60"></app-application-form>
+  <app-application-form [job]="selectedJob" (close)="closeApplicationForm()"
+    class="relative z-60"></app-application-form>
 </div>

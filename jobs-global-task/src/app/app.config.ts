@@ -5,6 +5,8 @@ import { provideStoreDevtools } from '@ngrx/store-devtools';
 import { provideEffects } from '@ngrx/effects';
 import { provideStore } from '@ngrx/store';
 import { HttpClientModule } from '@angular/common/http';
+import { ToastrModule } from 'ngx-toastr';
+import { BrowserAnimationsModule, NoopAnimationsModule } from '@angular/platform-browser/animations'; // Import BrowserAnimationsModule
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -13,6 +15,9 @@ export const appConfig: ApplicationConfig = {
     provideStoreDevtools({ maxAge: 25, logOnly: !isDevMode() }),
     provideEffects(),
     provideStore(),
-    importProvidersFrom(HttpClientModule),
+    importProvidersFrom(HttpClientModule), // Import BrowserAnimationsModule here
+    importProvidersFrom(ToastrModule.forRoot()), // Add ToastrModule
+    importProvidersFrom(NoopAnimationsModule), // Use NoopAnimationsModule instead of BrowserAnimationsModule
+
   ]
 };

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpResponse } from '@angular/common/http';
-import { lastValueFrom, Observable, take } from 'rxjs';
+import { delay, lastValueFrom, Observable, of, take } from 'rxjs';
 import { jobsGetResponse } from '../models/jobs.model';
 
 @Injectable({
@@ -15,5 +15,13 @@ export class JobService {
     const req = this.http.get<any>(`${this.apiUrl}&page=${page}`)
     .pipe(take(1));
   return lastValueFrom(req);
+  }
+  submitApplication(data: any): Observable<any> {
+    return of({ success: true }).pipe(delay(1000)); // Simulating a 1-second delay
+  }
+
+  login(email: string, password: string): Observable<any> {
+    // Replace with your actual login API endpoint and request structure
+    return this.http.post<any>(`${this.apiUrl}/login`, { email, password });
   }
 }
